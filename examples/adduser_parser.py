@@ -1,10 +1,10 @@
 """
 ADDUSER Parser Example
 ======================
-Reference implementation for parsing RACF ADDUSER commands.
-Use this as a template for other commands.
+Hello! if you follow my work you may be wondering; "this is familiar?!" 
+well thank you fan or passerby. This is because i'm basically using all my other LSP's as a format for this one so this one looks similar to all others.
 
-This is deliberately simple - no fancy libraries, just readable Python.
+over time this will be added on and youll see more files in this folder.
 """
 
 import re
