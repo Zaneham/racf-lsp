@@ -1,0 +1,142 @@
+/* =================================================================== */
+/* RACF Sample Commands - Use this to test your LSP                    */
+/* =================================================================== */
+
+/* ------------------------------ */
+/* User Management                */
+/* ------------------------------ */
+
+/* Minimal user */
+ADDUSER (JSMITH)
+
+/* User with name and group */
+ADDUSER (MJONES) NAME('Mary Jones') DFLTGRP(PAYROLL)
+
+/* User with password and attributes */
+ADDUSER (BWILSON) NAME('Bob Wilson') -
+    DFLTGRP(DEVTEAM) -
+    PASSWORD(TEMP1234) -
+    AUTHORITY(CREATE)
+
+/* Security administrator */
+ADDUSER (SECADMIN) NAME('Security Admin') -
+    DFLTGRP(SYS1) -
+    SPECIAL AUDITOR OPERATIONS -
+    CLAUTH(USER GROUP DATASET)
+
+/* UNIX user with OMVS segment */
+ADDUSER (UNIXUSR) NAME('Unix User') -
+    DFLTGRP(UNIXGRP) -
+    OMVS(UID(1000) HOME('/u/unixusr') PROGRAM('/bin/sh'))
+
+/* TSO user */
+ADDUSER (TSOUSR) NAME('TSO User') -
+    DFLTGRP(TSOGROUP) -
+    TSO(ACCTNUM(ACCT01) PROC(IKJACCNT) SIZE(4096) MAXSIZE(32768))
+
+/* Full example with multiple segments */
+ADDUSER (POWERUSR) NAME('Power User') -
+    DFLTGRP(ADMINS) -
+    PASSWORD(INITIAL1) -
+    SPECIAL -
+    OMVS(AUTOUID HOME('/u/powerusr') PROGRAM('/bin/sh')) -
+    TSO(ACCTNUM(ADMIN01) PROC(IKJACCNT) SIZE(8192)) -
+    WORKATTR(WADEPT(IT) WABLDG(HQ))
+
+/* Alter existing user */
+ALTUSER (JSMITH) NAME('John A. Smith') SPECIAL
+
+/* Delete user */
+DELUSER (TEMPUSER)
+
+/* List user */
+LISTUSER (JSMITH) OMVS TSO
+
+/* ------------------------------ */
+/* Group Management               */
+/* ------------------------------ */
+
+/* Create group */
+ADDGROUP (DEVTEAM) OWNER(SECADMIN) SUPGROUP(SYS1)
+
+/* Group with OMVS */
+ADDGROUP (UNIXGRP) -
+    OWNER(SECADMIN) -
+    OMVS(GID(100))
+
+/* Alter group */
+ALTGROUP (DEVTEAM) DATA('Development Team')
+
+/* Delete group */
+DELGROUP (OLDGROUP)
+
+/* List group */
+LISTGRP (DEVTEAM)
+
+/* Connect user to group */
+CONNECT (JSMITH) GROUP(DEVTEAM) AUTHORITY(USE)
+
+/* Remove user from group */
+REMOVE (JSMITH) GROUP(DEVTEAM)
+
+/* ------------------------------ */
+/* Dataset Profiles               */
+/* ------------------------------ */
+
+/* Generic dataset profile */
+ADDSD ('PROD.**') UACC(NONE) OWNER(SECADMIN)
+
+/* Discrete profile */
+ADDSD ('SYS1.PARMLIB') UACC(READ) AUDIT(ALL(READ))
+
+/* Permit access */
+PERMIT 'PROD.**' CLASS(DATASET) ID(DEVTEAM) ACCESS(READ)
+PERMIT 'PROD.**' CLASS(DATASET) ID(JSMITH) ACCESS(UPDATE)
+
+/* List dataset profile */
+LISTDSD DATASET('PROD.**') ALL
+
+/* Delete dataset profile */
+DELDSD ('TEST.**')
+
+/* ------------------------------ */
+/* General Resources              */
+/* ------------------------------ */
+
+/* Define resource */
+RDEFINE FACILITY BPX.SUPERUSER UACC(NONE)
+
+/* Permit resource */
+PERMIT BPX.SUPERUSER CLASS(FACILITY) ID(UNIXUSR) ACCESS(READ)
+
+/* Alter resource */
+RALTER FACILITY BPX.SUPERUSER AUDIT(ALL)
+
+/* List resource */
+RLIST FACILITY BPX.SUPERUSER ALL
+
+/* Delete resource */
+RDELETE FACILITY BPX.OLDRESOURCE
+
+/* ------------------------------ */
+/* System Options                 */
+/* ------------------------------ */
+
+/* Set system options */
+SETROPTS CLASSACT(FACILITY)
+SETROPTS RACLIST(FACILITY) REFRESH
+SETROPTS PASSWORD(HISTORY(10) INTERVAL(30))
+SETROPTS AUDIT(USER)
+
+/* ------------------------------ */
+/* Search                         */
+/* ------------------------------ */
+
+/* Search for users */
+SEARCH CLASS(USER) MASK(J*)
+
+/* Search for datasets */
+SEARCH CLASS(DATASET) MASK(PROD.**)
+
+/* Search with filter */
+SEARCH CLASS(USER) SPECIAL
