@@ -209,13 +209,4 @@ ADDUSER (JSMITH) NAME('John Smith') -
     PASSWORD(TEMP123)
 ```
 
-## Notes for Parser
 
-1. **Command can start with subsystem prefix:** `@ADDUSER` or `RACF ADDUSER`
-2. **Short form:** `AU` = `ADDUSER`
-3. **Case insensitive:** `adduser` = `ADDUSER`
-4. **Positional arg required:** `(userid)` must come first after command
-5. **Multiple userids:** `(USER1 USER2 USER3)` - but some keywords disallow this
-6. **Quoted strings:** Single quotes, double single-quote for embedded quote
-7. **Segments nest:** `OMVS(UID(100) HOME('/u/x'))` - parens inside parens
-8. **Boolean pairs:** `SPECIAL`/`NOSPECIAL` are mutually exclusive
