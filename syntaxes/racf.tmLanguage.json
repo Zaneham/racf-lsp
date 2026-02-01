@@ -1,0 +1,126 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "RACF",
+  "scopeName": "source.racf",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#commands" },
+    { "include": "#segments" },
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.racf",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "commands": {
+      "patterns": [
+        {
+          "name": "keyword.control.command.racf",
+          "match": "(?i)\\b(ADDUSER|AU|ALTUSER|ALU|DELUSER|DU|LISTUSER|LU|PASSWORD|PW|ADDGROUP|AG|ALTGROUP|ALG|DELGROUP|DG|LISTGRP|LG|CONNECT|CO|REMOVE|RE|ADDSD|AD|ALTDSD|ALD|DELDSD|DD|LISTDSD|LD|RDEFINE|RDEF|RALTER|RALT|RDELETE|RDEL|RLIST|RL|PERMIT|PE|SETROPTS|SETR|SEARCH|SR|RACDCERT)\\b"
+        }
+      ]
+    },
+    "segments": {
+      "patterns": [
+        {
+          "name": "entity.name.type.segment.racf",
+          "match": "(?i)\\b(CICS|DCE|DFP|EIM|KERB|LANGUAGE|LNOTES|NDS|NETVIEW|OMVS|OPERPARM|OVM|PROXY|TSO|WHEN|WORKATTR)\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "comment": "Boolean flags",
+          "name": "keyword.other.flag.racf",
+          "match": "(?i)\\b(ADSP|NOADSP|AUDITOR|NOAUDITOR|GRPACC|NOGRPACC|OIDCARD|NOOIDCARD|OPERATIONS|NOOPERATIONS|RESTRICTED|NORESTRICTED|ROAUDIT|NOROAUDIT|SPECIAL|NOSPECIAL|NOPASSWORD|NOCLAUTH|AUTOUID|SHARED|NOMEMLIMIT|NOSHMEMMAX)\\b"
+        },
+        {
+          "comment": "Keywords with values",
+          "name": "keyword.other.racf",
+          "match": "(?i)\\b(ADDCATEGORY|AUTHORITY|CLAUTH|DATA|DFLTGRP|MODEL|NAME|OWNER|PASSWORD|PHRASE|SECLABEL|SECLEVEL|UACC|CLASS|ID|ACCESS|AUDIT|ALL|MASK|REFRESH|HISTORY|INTERVAL|CLASSACT|RACLIST|GID|SUPGROUP)\\b"
+        },
+        {
+          "comment": "OMVS keywords",
+          "name": "keyword.other.omvs.racf",
+          "match": "(?i)\\b(ASSIZEMAX|UID|CPUTIMEMAX|FILEPROCMAX|HOME|MEMLIMIT|MMAPAREAMAX|PROCUSERMAX|PROGRAM|SHMEMMAX|THREADSMAX)\\b"
+        },
+        {
+          "comment": "TSO keywords",
+          "name": "keyword.other.tso.racf",
+          "match": "(?i)\\b(ACCTNUM|COMMAND|DEST|HOLDCLASS|JOBCLASS|MAXSIZE|MSGCLASS|PROC|SIZE|UNIT|USERDATA)\\b"
+        },
+        {
+          "comment": "Access levels",
+          "name": "constant.language.access.racf",
+          "match": "(?i)\\b(NONE|READ|UPDATE|CONTROL|ALTER)\\b"
+        },
+        {
+          "comment": "Group authorities",
+          "name": "constant.language.authority.racf",
+          "match": "(?i)\\b(USE|CREATE|CONNECT|JOIN)\\b"
+        },
+        {
+          "comment": "Resource classes",
+          "name": "support.class.racf",
+          "match": "(?i)\\b(DATASET|FACILITY|PROGRAM|TERMINAL|SDSF|TAPEVOL|DASDVOL|JESSPOOL|JESJOBS|SURROGAT|OPERCMDS|CONSOLE)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.racf",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.racf",
+              "match": "''"
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.racf",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "punctuation.continuation.racf",
+          "match": "-\\s*$"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "comment": "Dataset names with quotes",
+          "name": "string.unquoted.dataset.racf",
+          "match": "'[A-Za-z@#$][A-Za-z0-9@#$.]*'"
+        },
+        {
+          "comment": "User/group IDs",
+          "name": "variable.other.racf",
+          "match": "\\b[A-Za-z@#$][A-Za-z0-9@#$]{0,7}\\b"
+        }
+      ]
+    }
+  }
+}

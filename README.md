@@ -18,16 +18,19 @@ What exists right now:
 |-----------|--------|
 | README with good intentions | You're reading it |
 | ADDUSER grammar specification | Done |
-| ADDUSER parser prototype | Works on my machine |
-| Actual LSP server | Not yet |
-| VS Code extension | Not yet |
-| Everything else | Wishful thinking |
+| Python LSP server | Working (basic) |
+| VS Code extension | Working (basic) |
+| Syntax highlighting | Working |
+| Hover information | Working |
+| Code completion | Working |
+| Diagnostics | Not yet |
+| Go to definition | Not yet |
 
-What I'm working on:
-1. Getting the command parser to handle the full ADDUSER syntax
-2. Extending to ALTUSER, PERMIT, RDEFINE
-3. Building the actual language server
-4. Pretending I know what I'm doing
+What's working:
+- Syntax highlighting for all RACF commands
+- Hover documentation for commands, keywords, segments
+- Code completion for commands, keywords, access levels
+- Document outline showing commands
 
 ## What is RACF?
 
@@ -144,14 +147,21 @@ This LSP will exist because if you're going to be that person, you should at lea
 
 ```
 racf-lsp/
-├── grammar/           # Command grammar specifications
-│   └── ADDUSER.md     # ADDUSER command reference
-├── examples/          # Parser prototypes
-│   └── adduser_parser.py
-├── src/               # The LSP (eventually)
-├── test/              # Test files
-│   └── sample.racf    # Sample commands
-└── README.md          # Ambitious claims
+├── server/
+│   └── racf_server.py     # Python LSP server
+├── src/
+│   └── extension.ts       # VS Code extension client
+├── syntaxes/
+│   └── racf.tmLanguage.json  # TextMate grammar
+├── grammar/
+│   └── ADDUSER.md         # Command grammar spec
+├── examples/
+│   └── adduser_parser.py  # Parser prototype
+├── test/
+│   └── sample.racf        # Sample commands
+├── package.json           # VS Code extension manifest
+├── language-configuration.json
+└── tsconfig.json
 ```
 
 ## Related Projects
